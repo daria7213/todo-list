@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Tasks
+{% endblock %}
+
+{% block body %}
+<div class="panel panel-default">
+    <div class="panel-heading">Tasks {{ url('new_task') }}</div>
+    <div class="panel-body task-list">
+        <div class="input-group new-task">
+            <input type="text" class="text form-control" title="New task" aria-label="Task" placeholder="Task">
+            <span class="input-group-addon">
+                <label>
+                    <input type="checkbox" title = "Important" aria-label="Priority" class="priority">Important!
+                </label>
+            </span>
+            <div class="date input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Today<span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a class="today-btn" href="#">Today</a></li>
+                    <li><a class="tommorow-btn" href="#">Tomorrow</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <div class="calendar"></div>
+                        <input type="" class="calendar-date">
+                    </li>
+                </ul>
+            </div>
+            <div class="input-group-btn">
+                <button id="add" class="btn btn-default" type="button">Add</button>
+            </div>
+        </div>
+        {% for task in tasks %}
+        <div class="task-item" id="{{ task.getId() }}">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <input class="status" type="checkbox" title = "Status" aria-label="Status" {% if task.getStatus() == true %} checked {% endif %}>
+                </span>
+                <input type="text" class="task form-control" title="Task" aria-label="Task" value="{{ task.getText() }}">
+                <span class="input-group-addon">
+                    <label>
+                        <input class="priority" type="checkbox" title = "Important" aria-label="Status" {% if task.getPriority() == true %} checked {% endif %}>Important!
+                    </label>
+                </span>
+                <div class="date input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="#">{{ task.getDateString() }}</a></li>
+                        <li><a class="today-btn" href="#">Today</a></li>
+                        <li><a class="tomorrow-btn" href="#">Tomorrow</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <div class="calendar" data-date="{{ task.getDateString() }}"></div>
+                            <input type="" class="hidden calendar-date">
+                        </li>
+                    </ul>
+                </div>
+                <div class="input-group-btn">
+                    <button id="delete" class="btn btn-default" type="button">X</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        {#<div class="calendar"></div>#}
+        {#<input type="" class="calendar-date">#}
+    </div>
+
+</div>
+{% endblock %}

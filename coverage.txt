@@ -1,0 +1,14 @@
+
+
+Code Coverage Report:     
+  2016-07-20 15:19:09     
+                          
+ Summary:                 
+  Classes:  0.00% (0/2)   
+  Methods: 64.71% (11/17) 
+  Lines:   76.64% (82/107)
+
+\App\Repository::TaskRepository
+  Methods:  85.71% ( 6/ 7)   Lines:  74.36% ( 29/ 39)
+\App\Repository::UserRepository
+  Methods:  50.00% ( 5/10)   Lines:  77.94% ( 53/ 68)

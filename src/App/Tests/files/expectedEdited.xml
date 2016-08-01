@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<mysqldump xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<database name="todo_test">
+    <table_data name="users">
+        <row>
+            <field name="id">1</field>
+            <field name="username">valid</field>
+            <field name="email">user1@user1</field>
+            <field name="password">$2y$13$XSpJQTTNpWxcNBucAPWuyeRuSDyjsbuDOr4T1WXwW9UJRjMK1t9iS</field>
+            <field name="role">ROLE_USER</field>
+            <field name="created_at">2016-07-07 00:20:16</field>
+        </row>
+        <row>
+            <field name="id">2</field>
+            <field name="username">admin</field>
+            <field name="email">admin@admin</field>
+            <field name="password">$2y$13$LHdI1GckFHzI1o0T0bgGeeSgXaNh9enEaGXNPL8wUnyRQKPs.Zrl6</field>
+            <field name="role">ROLE_ADMIN</field>
+            <field name="created_at">2016-07-07 00:20:16</field>
+        </row>
+    </table_data>
+    <table_data name="tasks">
+        <row>
+            <field name="id">1</field>
+            <field name="user_id">1</field>
+            <field name="text">edited task</field>
+            <field name="priority">1</field>
+            <field name="created_at">2016-07-09 02:07:57</field>
+            <field name="status">0</field>
+            <field name="date">2016-07-09 00:00:00</field>
+        </row>
+        <row>
+            <field name="id">2</field>
+            <field name="user_id">2</field>
+            <field name="text">task2</field>
+            <field name="priority">0</field>
+            <field name="created_at">2016-07-09 02:08:34</field>
+            <field name="status">0</field>
+            <field name="date">2019-07-21 00:00:00</field>
+        </row>
+    </table_data>
+</database>
+</mysqldump>
