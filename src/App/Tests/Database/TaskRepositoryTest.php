@@ -89,7 +89,7 @@ class TaskRepositoryTest extends Generic_Tests_DatabaseTestCase {
 
     public function testDelete(){
         $this->assertEquals(2, $this->getConnection()->getRowCount('tasks'), "pre deleting task");
-        $this->getRepository()->delete(1);
+        $this->getRepository()->delete('1');
         $this->assertTableRowCount('tasks',1);
     }
 

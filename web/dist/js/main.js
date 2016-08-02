@@ -1,22 +1,41 @@
 
 $(function(){
 
-    var newTask = {
-        text: $('.new-task .text'),
-        priority: $('.new-task .priority'),
-        date: $('.new-task .calendar'),
+    var task = {
+
+        init: function(){
+            taskDate.init();
+            $('#add').click(task.addTask);
+            $('.task-list').on('click', '.task-item', function(){
+                task.deleteTask($(this));
+            });
+        },
         addTask: function(){
             $.ajax({
                 type: 'POST',
                 url: 'tasks',
                 dataType: 'json',
                 data: {
-                    text: newTask.text.val(),
-                    priority: newTask.priority.prop('checked'),
-                    date: taskDate.formatDate(newTask.date.datepicker('getDate'))
+                    text: $('.new-task .text').val(),
+                    priority: $('.new-task .priority').prop('checked'),
+                    date: taskDate.formatDate($('.new-task .calendar').datepicker('getDate'))
                 },
                 success: function(taskData,status){
-                    newTask.appendTask($.parseJSON(taskData));
+                    task.appendTask($.parseJSON(taskData));
+                }
+            });
+        },
+        deleteTask: function(task) {
+            var id = task.attr('id');
+            $.ajax({
+                url: 'tasks',
+                type:'DELETE',
+                dataType: 'text',
+                data: {
+                    id: id
+                },
+                success: function(text, status){
+                    task.remove()
                 }
             });
         },
@@ -96,8 +115,7 @@ $(function(){
         }
     };
 
-    taskDate.init();
-    $('#add').click(newTask.addTask);
+    task.init();
 
 
     //$('.calendar').datepicker({

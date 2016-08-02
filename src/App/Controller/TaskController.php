@@ -41,7 +41,7 @@ class TaskController
             new \DateTime('NOW')
         );
 
-        $result = $app['repository.task']->save($task);
+        $app['repository.task']->save($task);
 
         $taskData = array(
             'id' => $task->getId(),
@@ -52,5 +52,14 @@ class TaskController
         );
         //return '<pre>'.var_dump($task).'</pre><br><pre>'.var_dump($result).'</pre>';
         return $app->json(json_encode($taskData));
+    }
+
+    public function deleteAction(Request $request, Application $app){
+
+        $id = $request->request->get('id');
+        $app['repository.task']->delete($id);
+
+        return new Response();
+
     }
 }

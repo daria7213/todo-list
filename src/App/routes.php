@@ -22,6 +22,7 @@ $app->get('/login', function(Request $request) use ($app) {
 $app->get('/account', 'controller.home:accountAction')->bind('account');
 $app->get('tasks', 'controller.task:showAction')->bind('tasks');
 $app->post('/tasks', 'controller.task:newAction')->bind('new_task');
+$app->delete('/tasks', 'controller.task:deleteAction')->bind('delete_task');
 
 $app->get('/user', function() use ($app){
     $user = new \App\Entity\User(1,'doo','heheheh','lol','ROLE_ADMIN',null);
