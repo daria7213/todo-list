@@ -5,9 +5,15 @@ $(function(){
 
         init: function(){
             taskDate.init();
-            $('#add').click(task.addTask);
-            $('.task-list').on('click', '.task-item', function(){
-                task.deleteTask($(this));
+            $('.task-add').click(task.addTask);
+            $('.task-list').on('click', '.task-delete', function(){
+                task.deleteTask($(this).closest('.task-item'));
+            });
+            $('.task-list').on('change', '.task-status:not(.adding), .task-priority:not(.adding), .task-text:not(.adding)', function(){
+                task.updateTask($(this).closest('.task-item'));
+            });
+            $('.task-list').on('changeDate', '.calendar:not(.adding)', function(){
+                task.updateTask($(this).closest('.task-item'));
             });
         },
         addTask: function(){
@@ -16,8 +22,8 @@ $(function(){
                 url: 'tasks',
                 dataType: 'json',
                 data: {
-                    text: $('.new-task .text').val(),
-                    priority: $('.new-task .priority').prop('checked'),
+                    text: $('.new-task .task-text').val(),
+                    priority: $('.new-task .task-priority').prop('checked'),
                     date: taskDate.formatDate($('.new-task .calendar').datepicker('getDate'))
                 },
                 success: function(taskData,status){
@@ -26,42 +32,61 @@ $(function(){
             });
         },
         deleteTask: function(task) {
-            var id = task.attr('id');
             $.ajax({
                 url: 'tasks',
                 type:'DELETE',
                 dataType: 'text',
                 data: {
-                    id: id
+                    id: task.attr('id')
                 },
                 success: function(text, status){
                     task.remove()
                 }
             });
         },
+
+        updateTask: function(task){
+            $.ajax({
+                type: 'PUT',
+                url: 'tasks',
+                data: {
+                    id: task.attr('id'),
+                    status: task.find('.task-status').prop('checked'),
+                    priority: task.find('.task-priority').prop('checked'),
+                    text: task.find('.task-text').val(),
+                    date: taskDate.formatDate(task.find('.calendar').datepicker('getDate'))
+                },
+                success: function(text, status){
+                    alert('edited');
+                }
+            });
+        },
         appendTask: function(taskData){
+            var taskList = $('.task-list').detach();
+
             var newTask = "<div class='task-item' id='"+taskData.id+"'>"+
             "<div class='input-group'><span class='input-group-addon'>"+
-            "<input class='status' type='checkbox' title = 'Status' aria-label='Status' "+ (taskData.status === true ? 'checked': '') +"></span>"+
-            "<input type='text' class='task form-control' title='Task' aria-label='Task' value='" + taskData.text + "'>"+
+            "<input class='task-status' type='checkbox' title = 'Status' aria-label='Status' "+ (taskData.status === true ? 'checked': '') +"></span>"+
+            "<input type='text' class='task-text form-control' title='Task' aria-label='Task' value='" + taskData.text + "'>"+
             "<span class='input-group-addon'><label>"+
-            "<input class='priority' type='checkbox' title = 'Important' aria-label='Status' "+ (taskData.priority === true ? 'checked': '') +">Important!</label></span>"+
-            "<div class='date input-group-btn'><button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>"+
+            "<input class='task-priority' type='checkbox' title = 'Important' aria-label='Status' "+ (taskData.priority === true ? 'checked': '') +">Important!</label></span>"+
+            "<div class='task-date input-group-btn'><button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>"+
             "<ul class='dropdown-menu dropdown-menu-right'>"+
-            "<li><a href='#'>' + taskData.date +'</a></li>"+
             "<li><a class='today-btn' href='#'>Today</a></li>"+
             "<li><a class='tomorrow-btn' href='#'>Tomorrow</a></li>"+
             "<li role='separator' class='divider'></li>" +
             "<li><div class='calendar' data-date='" + taskData.date + "'></div><input type='' class='hidden calendar-date'></li></ul></div>"+
-            "<div class='input-group-btn'><button id='delete' class='btn btn-default' type='button'>X</button></div></div></div>";
+            "<div class='input-group-btn'><button class='task-delete btn btn-default' type='button'>X</button></div></div></div>";
 
-            $('.task-list').append(newTask);
-
-            $('#'+taskData.id).find('.calendar').datepicker({
+            taskList.append(newTask);
+            taskList.find('#'+taskData.id).find('.task-status, .task-text, .task-priority, .calendar').addClass('adding');
+            taskList.find('#'+taskData.id+' .calendar').datepicker({
                 format: taskDate.format
             }).each(function(){
                 taskDate.setDate($(this))
             });
+            taskList.find('#'+taskData.id).find('.task-status, .task-text, .task-priority, .calendar').removeClass('adding');
+            $('.task-panel .panel-body').append(taskList);
         }
     };
 
@@ -103,13 +128,13 @@ $(function(){
                 taskDate.setToday($(this));
             });
 
-            $('.date').find('.calendar').each(function(){
+            $('.task-list').find('.calendar').each(function(){
                 taskDate.setDate($(this));
             });
-            $('.date').on('changeDate', '.calendar', function(){
+            $('.task-list, .new-task').on('changeDate', '.calendar', function(){
                 taskDate.setDate($(this))
             });
-            $('.task-list').on('click', '.today-btn', function () {
+            $('.task-list, .new-task').on('click', '.today-btn', function () {
                 taskDate.setToday($(this).parent().parent().find('.calendar'));
             });
         }

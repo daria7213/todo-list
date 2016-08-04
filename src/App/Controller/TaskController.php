@@ -62,4 +62,19 @@ class TaskController
         return new Response();
 
     }
+
+    public function updateAction(Request $request, Application $app){
+        $task = new Task(
+            $request->request->get('id'),
+            $app['security.token_storage']->getToken()->getUser()->getId(),
+            $request->request->get('text'),
+            $request->request->get('priority') == 'true' ? true : false,
+            DateTime::createFromFormat('Y-m-d', $request->request->get('date')),
+            $request->request->get('status') == 'true' ? true : false
+        );
+
+        $app['repository.task']->update($task);
+
+        return new Response();
+    }
 }
