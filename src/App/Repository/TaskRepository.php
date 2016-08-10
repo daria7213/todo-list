@@ -47,11 +47,9 @@ class TaskRepository
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1,$userId);
         $stmt->execute();
-        if (!$taskdata = $stmt->fetchAll()) {
-            throw new Exception('Tasks not found');
-        }
+        $taskData = $stmt->fetchAll();
         $tasks = [];
-        foreach($taskdata as $task){
+        foreach($taskData as $task){
             $tasks[] = $this->buildTask($task);
         }
 
@@ -61,11 +59,9 @@ class TaskRepository
         $query = 'SELECT * FROM tasks';
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        if (!$taskdata = $stmt->fetchAll()) {
-            throw new Exception('Tasks not found');
-        }
+        $taskData = $stmt->fetchAll();
         $tasks = [];
-        foreach($taskdata as $task){
+        foreach($taskData as $task){
             $tasks[] = $this->buildTask($task);
         }
 

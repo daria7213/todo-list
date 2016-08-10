@@ -4,6 +4,7 @@ use App\Controller\HomeController;
 use App\Controller\TaskController;
 use App\Repository\TaskRepository;
 use App\Repository\UserRepository;
+use Silex\Provider\FormServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -27,6 +28,7 @@ $app['repository.task'] = function($app){
 //services
 $app->register(new Silex\Provider\VarDumperServiceProvider());
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
+    'twig.form.templates' => array('form_div_layout.html.twig', 'twig/form_div_layout.html.twig'),
     'twig.path' => __DIR__ . '\views',
 ));
 $app->register(new Silex\Provider\SerializerServiceProvider());
@@ -35,13 +37,11 @@ $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'locale' => 'en',
     'locale_fallbacks' => array('ru'),
 ));
-
 $app->extend('translator', function($translator, $app) {
     $translator->addResource('xliff', __DIR__.'/locales/en.xlf', 'en');
     $translator->addResource('xliff', __DIR__.'/locales/ru.xlf', 'ru');
     return $translator;
 });
-
 $app->register(new Silex\Provider\ServiceControllerServiceProvider());
 $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
@@ -53,13 +53,16 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
         'password'  => '1723',
     ),
 ));
-
 $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     'security.firewalls' => array(
-        'login_path' => array(
-            'pattern' => '^/login$',
-            'anonymous' => true
-        ),
+//        'login_path' => array(
+//            'pattern' => '^/login$',
+//            'anonymous' => true
+//        ),
+//        'register_path' => array(
+//            'pattern' => '^/register$',
+//            'anonymous' => true
+//        ),
         'default' => array(
             'pattern' => '^/.*$',
             'anonymous' => true,
@@ -78,17 +81,19 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     ),
     'security.access_rules' => array(
         array('^/login$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
-        array('^/.+$', 'ROLE_USER'),
-        array('^/.+$', 'ROLE_ADMIN')
+        array('^/register$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
+        array('^/.+$', array('ROLE_ADMIN', 'ROLE_USER')),
     )
 ));
+$app->register(new FormServiceProvider());
 
 $app->register(new Silex\Provider\ValidatorServiceProvider());
-
-$metadata = $app['validator.mapping.class_metadata_factory']->getMetadataFor('App\Entity\User');
-$metadata->addPropertyConstraint('username', new Assert\NotBlank());
-$metadata->addPropertyConstraint('username', new Assert\Length(array('min' => 6)));
-$metadata->addPropertyConstraint('email', new Assert\Email());
+//
+//$metadata = $app['validator.mapping.class_metadata_factory']->getMetadataFor('App\Entity\User');
+//$metadata->addPropertyConstraint('username', new Assert\NotBlank());
+//$metadata->addPropertyConstraint('username', new Assert\Length(array('min' => 3)));
+//$metadata->addPropertyConstraint('email', new Assert\Email());
+//$metadata->addPropertyConstraint('password', new Assert\Length(array('min' => 6)));
 
 //$schema = $app['db']->getSchemaManager();
 //if (!$schema->tablesExist('users')) {

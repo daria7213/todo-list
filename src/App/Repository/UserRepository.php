@@ -23,13 +23,13 @@ class UserRepository implements UserProviderInterface{
 
     protected $conn;
     protected $encoder;
-    protected $validator;
+//    protected $validator;
 
-    public function __construct(Connection $conn, $encoder, $validator)
+    public function __construct(Connection $conn, $encoder)
     {
         $this->conn = $conn;
         $this->encoder = $encoder;
-        $this->validator = $validator;
+//        $this->validator = $validator;
     }
 
     public function find($id){
@@ -37,6 +37,10 @@ class UserRepository implements UserProviderInterface{
         return $this->buildUser($userData);
     }
 
+    public function findByEmail($email){
+        $userData = $this->conn->fetchAssoc('SELECT * FROM users WHERE email = ?', array($email));
+        return $this->buildUser($userData);
+    }
     public function findAll(){
         $query = 'SELECT * FROM users';
         $stmt = $this->conn->prepare($query);
@@ -53,26 +57,15 @@ class UserRepository implements UserProviderInterface{
     }
 
     public function save(User $user){
-        $errors = [];
-        $validatorErrors = $this->validator->validate($user);
-        if(count($validatorErrors)>0){
-            foreach($validatorErrors as $error){
-                $errors['validator'] = $error;
-            }
-            return $errors;
-        }
-        try{
-            $this->conn->insert('users', array(
-                'username' => $user->getUsername(),
-                'email' => $user->getEmail(),
-                'password' => $user->getPassword(),
-                'role' => $user->getRole(),
-                'created_at' => $user->getCreatedAt()->format('Y-m-d H:i:s')));
-        } catch (DBALException $e) {
-            $errors['dbal'] = $e;
-        }
-
-        return $errors;
+        $this->conn->insert('users', array(
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'password' => $this->encoder->encodePassword($user->getPassword(), null),
+            'role' => $user->getRole(),
+            'created_at' => $user->getCreatedAt()->format('Y-m-d H:i:s')
+        ));
+        $id = $this->conn->lastInsertId();
+        $user->setId($id);
     }
 
     public function delete($id){
@@ -80,29 +73,18 @@ class UserRepository implements UserProviderInterface{
     }
 
     public function update(User $user){
-        $errors =[];
-        $validatorErrors = $this->validator->validate($user);
-        if(count($validatorErrors)>0){
-            foreach($validatorErrors as $error){
-                $errors['validator'] = $error;
-            }
-            return $errors;
-        }
-        try{
-            $this->conn->update('users',array(
-                'username' => $user->getUsername(),
-                'email' => $user->getEmail(),
-                'password' => $user->getPassword(),
-                'role' => $user->getRole(),
-            ), array('id' => $user->getId()));
-        } catch (DBALException $e){
-            $errors['dbal'] = $e;
-        }
-
-        return $errors;
+        $this->conn->update('users',array(
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'password' => $user->getPassword(),
+            'role' => $user->getRole(),
+        ), array('id' => $user->getId()));
     }
 
     public function buildUser($user){
+        if (!$user){
+            return false;
+        }
         return new User(
             $user['id'],
             $user['username'],
@@ -126,7 +108,7 @@ class UserRepository implements UserProviderInterface{
      */
     public function loadUserByUsername($username)
     {
-        $query = 'SELECT * FROM users WHERE username = ?';
+        $query = 'SELECT * FROM users WHERE email = ?';
         if (!$userdata = $this->conn->fetchAssoc($query, array($username))) {
             throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
         }

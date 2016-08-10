@@ -57,7 +57,7 @@ $(function(){
                     date: taskDate.formatDate(task.find('.calendar').datepicker('getDate'))
                 },
                 success: function(text, status){
-                    alert('edited');
+                    //alert('edited');
                 }
             });
         },
@@ -86,7 +86,7 @@ $(function(){
                 taskDate.setDate($(this))
             });
             taskList.find('#'+taskData.id).find('.task-status, .task-text, .task-priority, .calendar').removeClass('adding');
-            $('.task-panel .panel-body').append(taskList);
+            $('.tasks').append(taskList);
         }
     };
 
@@ -94,9 +94,15 @@ $(function(){
         format: 'yyyy-mm-dd',
 
         setDate: function(calendar){
-            var date = calendar.datepicker('getDate');
-            if(date.setHours(0,0,0,0) == (new Date).setHours(0,0,0,0)){
+            var date = calendar.datepicker('getDate').setHours(0,0,0,0);
+            var today = new Date().setHours(0,0,0,0);
+            var tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate()+1);
+            tomorrow = tomorrow.setHours(0,0,0,0);
+            if(date == today){
                 date = "Today";
+            }  else if (date == tomorrow){
+                date = "Tommorow";
             } else {
                 date = taskDate.formatDate(calendar.datepicker('getDate'));
             }
@@ -107,16 +113,18 @@ $(function(){
         formatDate: function(date){
             return date.getFullYear() + '-' + ('0' + (date.getMonth()+1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
         },
-        foo: function(){
-            var t = this;
-            var tt = $(this);
-            $.proxy(taskDate.setToday(), tt);
-        },
 
         setToday: function (calendar) {
             var today = new Date();
             today.setHours(0,0,0,0);
             calendar.datepicker('setDate', today);
+        },
+
+        setTomorrow: function (calendar) {
+            var tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate()+1);
+            tomorrow.setHours(0,0,0,0);
+            calendar.datepicker('setDate', tomorrow);
         },
 
         init: function(){
@@ -137,25 +145,11 @@ $(function(){
             $('.task-list, .new-task').on('click', '.today-btn', function () {
                 taskDate.setToday($(this).parent().parent().find('.calendar'));
             });
+            $('.task-list, .new-task').on('click', '.tomorrow-btn', function () {
+                taskDate.setTomorrow($(this).parent().parent().find('.calendar'));
+            });
         }
     };
 
     task.init();
-
-
-    //$('.calendar').datepicker({
-    //    format: 'dd M dd'
-    //});
-    //$('.calendar').on("changeDate", function() {
-    //    var date = $(this).datepicker('getFormattedDate');
-    //    $(this).next('.calendar-date').val(date);
-    //    $(this).parents().prev('.btn').html(date + ' <span class="caret"></span>');
-    //
-    //});
-    //
-    //$('.date').find('button').each(function(){
-    //    var date = $(this).next().find('.calendar').datepicker('getFormattedDate');
-    //    $(this).html(date + '<span class="caret"></span>');
-    //});
-
 });

@@ -23,7 +23,7 @@ class User implements UserInterface {
 
     protected $password;
 
-    public function __construct($id = null,$username, $email, $password, $role, $createdAt)
+    public function __construct($id,$username, $email, $password, $role, $createdAt)
     {
         $this->id = $id;
         $this->username = $username;
@@ -161,6 +161,16 @@ class User implements UserInterface {
      * @return string The username
      */
     public function getUsername()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getRealUsername()
     {
         return $this->username;
     }

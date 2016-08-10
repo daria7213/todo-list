@@ -15,7 +15,9 @@
         "symfony/translation": "^3.1",
         "symfony/config": "^3.1",
         "symfony/var-dumper": "^3.1",
-        "symfony/validator": "^3.1"
+        "symfony/validator": "^3.1",
+        "symfony/form": "^3.1",
+        "symfony/security-csrf": "^3.1"
     },
     "autoload": {
         "psr-4": {"App\\": "src/"}

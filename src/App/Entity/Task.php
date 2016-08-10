@@ -21,7 +21,7 @@ class Task
     protected $createdAt;
 
 
-    public function __construct($id = null,$userId, $text, $priority = false, $date, $status = false,$createdAt=null)
+    public function __construct($id, $userId, $text, $priority, $date, $status,$createdAt = null)
     {
         $this->id = $id;
         $this->userId = $userId;

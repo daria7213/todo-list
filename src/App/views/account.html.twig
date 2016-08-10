@@ -5,7 +5,7 @@ My account
 {% endblock %}
 
 {% block body %}
-    <p><strong>Name: </strong> {{ user.username }}</p>
+    <p><strong>Name: </strong> {{ user.getRealUsername() }}</p>
     <p><strong>Email: </strong> {{ user.email }}</p>
     <p><strong>Date of registration: </strong> {{ user.createdAt }}</p>
 {% endblock %}

@@ -4,65 +4,74 @@
 Tasks
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.css">
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script type="text/javascript" src="dist/js/tasks.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/locales/bootstrap-datepicker.ru.min.js"></script>
+{% endblock %}
+
 {% block body %}
-<div class="task-panel panel panel-default">
-    <div class="panel-heading">Tasks</div>
-    <div class="panel-body">
-        <div class="input-group new-task">
-            <input type="text" class="task-text form-control" title="New task" aria-label="Task" placeholder="Task">
+<div class="tasks">
+    <div class="input-group new-task">
+        <input type="text" class="task-text form-control" title="New task" aria-label="Task" placeholder="Task">
+        <span class="input-group-addon">
+            <label>
+                <input type="checkbox" title = "Important" aria-label="Priority" class="task-priority">Important!
+            </label>
+        </span>
+        <div class="task-date input-group-btn">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Today<span class="caret"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <li><a class="today-btn" href="#">Today</a></li>
+                <li><a class="tomorrow-btn" href="#">Tomorrow</a></li>
+                <li role="separator" class="divider"></li>
+                <li>
+                    <div class="calendar"></div>
+                    <input type="" class="calendar-date">
+                </li>
+            </ul>
+        </div>
+        <div class="input-group-btn">
+            <button class="task-add btn btn-default" type="button">Add</button>
+        </div>
+    </div>
+    <div class="task-list">
+        {% for task in tasks %}
+            <div class="task-item" id="{{ task.getId() }}">
+                <div class="input-group">
+            <span class="input-group-addon">
+                <input class="task-status" type="checkbox" title = "Status" aria-label="Status" {% if task.getStatus() == true %} checked {% endif %}>
+            </span>
+                    <input type="text" class="task-text form-control" title="Task" aria-label="Task" value="{{ task.getText() }}">
             <span class="input-group-addon">
                 <label>
-                    <input type="checkbox" title = "Important" aria-label="Priority" class="task-priority">Important!
+                    <input class="task-priority" type="checkbox" title = "Important" aria-label="Status" {% if task.getPriority() == true %} checked {% endif %}>Important!
                 </label>
             </span>
-            <div class="task-date input-group-btn">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Today<span class="caret"></span></button>
-                <ul class="dropdown-menu dropdown-menu-right">
-                    <li><a class="today-btn" href="#">Today</a></li>
-                    <li><a class="tommorow-btn" href="#">Tomorrow</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li>
-                        <div class="calendar"></div>
-                        <input type="" class="calendar-date">
-                    </li>
-                </ul>
-            </div>
-            <div class="input-group-btn">
-                <button class="task-add btn btn-default" type="button">Add</button>
-            </div>
-        </div>
-        <div class="task-list">
-            {% for task in tasks %}
-                <div class="task-item" id="{{ task.getId() }}">
-                    <div class="input-group">
-                <span class="input-group-addon">
-                    <input class="task-status" type="checkbox" title = "Status" aria-label="Status" {% if task.getStatus() == true %} checked {% endif %}>
-                </span>
-                        <input type="text" class="task-text form-control" title="Task" aria-label="Task" value="{{ task.getText() }}">
-                <span class="input-group-addon">
-                    <label>
-                        <input class="task-priority" type="checkbox" title = "Important" aria-label="Status" {% if task.getPriority() == true %} checked {% endif %}>Important!
-                    </label>
-                </span>
-                        <div class="task-date input-group-btn">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a class="today-btn" href="#">Today</a></li>
-                                <li><a class="tomorrow-btn" href="#">Tomorrow</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li>
-                                    <div class="calendar" data-date="{{ task.getDateString() }}"></div>
-                                    <input type="" class="hidden calendar-date">
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="input-group-btn">
-                            <button class="task-delete btn btn-default" type="button">X</button>
-                        </div>
+                    <div class="task-date input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a class="today-btn" href="#">Today</a></li>
+                            <li><a class="tomorrow-btn" href="#">Tomorrow</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <div class="calendar" data-date="{{ task.getDateString() }}"></div>
+                                <input type="" class="hidden calendar-date">
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="input-group-btn">
+                        <button class="task-delete btn btn-default" type="button">X</button>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

@@ -43,7 +43,7 @@ class UserRepositoryTest extends Generic_Tests_DatabaseTestCase {
         ->method('validate')
         ->will($this->returnCallback(
             function($param){
-                if($param->getUsername() == 'valid'){
+                if($param->getRealUsername() == 'valid'){
                     return [];
                 }
                 return ['dbal'=>['error']];
@@ -54,7 +54,7 @@ class UserRepositoryTest extends Generic_Tests_DatabaseTestCase {
 
     public function testFind(){
         $user = $this->getRepository()->find(1);
-        $this->assertEquals($user->getUsername(), 'user1');
+        $this->assertEquals($user->getRealUsername(), 'user1');
     }
 
     public function testFindAllEmpty(){
@@ -125,5 +125,15 @@ class UserRepositoryTest extends Generic_Tests_DatabaseTestCase {
         $expectedTable = $this->createMySQLXMLDataSet(dirname(__FILE__) . '/../files/todo_db.xml')
             ->getTable("users");
         $this->assertTablesEqual($expectedTable, $queryTable);
+    }
+
+    public function testFindByEmailFalse(){
+        $user = $this->getRepository()->findByEmail('test');
+        $this->assertFalse($user);
+    }
+
+    public function testFindByEmailFalseTrue(){
+        $user = $this->getRepository()->findByEmail('user1@user1');
+        $this->assertEquals($user->getId(),1);
     }
 }
