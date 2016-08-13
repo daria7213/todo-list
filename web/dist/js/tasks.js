@@ -77,7 +77,7 @@ $(function(){
             "<li><a class='tomorrow-btn' href='#'>Tomorrow</a></li>"+
             "<li role='separator' class='divider'></li>" +
             "<li><div class='calendar' data-date='" + taskData.date + "'></div><input type='' class='hidden calendar-date'></li></ul></div>"+
-            "<div class='input-group-btn'><button class='task-delete btn ' type='button'>X</button></div></div></div>";
+            "<div class='input-group-btn'><button class='task-delete btn ' type='button'><span class='fa fa-times' role='img' aria-label='Delete'></span></button></div></div></div>";
 
             taskList.append(newTask);
             taskList.find('#'+taskData.id).find('.task-status, .task-text, .task-priority, .calendar').addClass('adding');
