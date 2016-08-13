@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Lal
- * Date: 06.07.2016
- * Time: 21:45
- */
+
 namespace App\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;

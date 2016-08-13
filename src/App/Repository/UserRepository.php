@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Lal
- * Date: 06.07.2016
- * Time: 21:57
- */
+
 namespace App\Repository;
 
 use App\Entity\User;
@@ -23,13 +18,11 @@ class UserRepository implements UserProviderInterface{
 
     protected $conn;
     protected $encoder;
-//    protected $validator;
 
     public function __construct(Connection $conn, $encoder)
     {
         $this->conn = $conn;
         $this->encoder = $encoder;
-//        $this->validator = $validator;
     }
 
     public function find($id){

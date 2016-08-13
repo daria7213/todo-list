@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Lal
- * Date: 09.07.2016
- * Time: 4:13
- */
+
 namespace App\Entity;
 
 class Task
