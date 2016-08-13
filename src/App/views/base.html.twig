@@ -5,6 +5,8 @@
     <title>{% block title %}{% endblock %}</title>
     {% block stylesheets %}
         <link rel="stylesheet" href="dist/css/main.css">
+        <link rel="stylesheet" href="dist/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     {% endblock %}
 
     {% block javascript %}
@@ -23,26 +25,28 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <div class="collapse navbar-collapse" id ="main-nav">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="{{ path('home') }}">Home</a>
-                </li>
-                <li>
-                    <a href="{{ path('tasks') }}">Tasks</a>
-                </li>
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <li>
-                        <a href="{{ path('account') }}">My Account</a>
+        <div class="container">
+            <div class="collapse navbar-collapse" id ="main-nav">
+                <ul class="nav navbar-nav navbar-right">
+                    <li >
+                        <a href="{{ path('home') }}">Home</a>
                     </li>
                     <li>
-                        <a href="{{ path('logout') }}">Logout</a>
+                        <a href="{{ path('tasks') }}">Tasks</a>
                     </li>
-                {% else %}
-                    <li><a href="{{ path('login') }}">Login</a></li>
-                    <li><a href="{{ path('register') }}">Register</a> </li>
-                {% endif %}
-            </ul>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li>
+                            <a href="{{ path('account') }}">My Account</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li><a href="{{ path('login') }}">Login</a></li>
+                        <li><a href="{{ path('register') }}">Register</a> </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </nav>
     <div class="container">

@@ -1,0 +1,67 @@
+.tasks {
+  margin-top: 40px;
+  input[type=text]{
+    font-size: 1.5rem;
+    height: $task-height;
+    border-radius: 0;
+    border: 1px solid $border-color;
+    border-right: 0;
+  }
+  button{
+    height: $task-height;
+    font-size: 1.5rem;
+    border-radius: 0;
+    background-color: white;
+    border: 1px solid $border-color;
+  }
+  .input-group-addon {
+    padding: 0.5em;
+    background-color: white;
+    border-radius: 0;
+    border: 1px solid $border-color;
+    border-right: 0;
+    .task-checkbox {
+      margin: 0;
+      height: 100%;
+      cursor: pointer;
+      input{
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+      }
+      .indicator {
+        width: 1em;
+        font-size: 1.5em;
+        color: gray;
+
+        &:before {
+          position: absolute;
+          top:50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+      .task-priority:checked ~ .indicator{
+        color: red;
+      }
+      .task-status:checked ~ .indicator {
+        color: green;
+      }
+    }
+  }
+
+  .task-date {
+    min-width: 130px;
+    button {
+      width: 100%;
+    }
+  }
+
+  .task-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .new-task {
+    margin-bottom: 40px;
+  }
+}

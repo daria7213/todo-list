@@ -21,12 +21,13 @@ Tasks
     <div class="input-group new-task">
         <input type="text" class="task-text form-control" title="New task" aria-label="Task" placeholder="Task">
         <span class="input-group-addon">
-            <label>
-                <input type="checkbox" title = "Important" aria-label="Priority" class="task-priority">Important!
+            <label class="task-checkbox">
+                <input type="checkbox" title = "Important" aria-label="Priority" class="task-priority">
+                <span class="indicator fa fa-exclamation" role='img' aria-label="Important"></span>
             </label>
         </span>
         <div class="task-date input-group-btn">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Today<span class="caret"></span></button>
+            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Today <span class="caret"></span></button>
             <ul class="dropdown-menu dropdown-menu-right">
                 <li><a class="today-btn" href="#">Today</a></li>
                 <li><a class="tomorrow-btn" href="#">Tomorrow</a></li>
@@ -38,7 +39,9 @@ Tasks
             </ul>
         </div>
         <div class="input-group-btn">
-            <button class="task-add btn btn-default" type="button">Add</button>
+            <button class="task-add btn" type="button">
+                <span class='fa fa-plus' role='img' aria-label='Add'></span>
+            </button>
         </div>
     </div>
     <div class="task-list">
@@ -46,16 +49,20 @@ Tasks
             <div class="task-item" id="{{ task.getId() }}">
                 <div class="input-group">
             <span class="input-group-addon">
-                <input class="task-status" type="checkbox" title = "Status" aria-label="Status" {% if task.getStatus() == true %} checked {% endif %}>
+                <label class="task-checkbox">
+                    <input class="task-status" type="checkbox" title = "Status" aria-label="Status" {% if task.getStatus() == true %} checked {% endif %}>
+                    <span class="indicator fa fa-check" role='img' aria-label="Important"></span>
+                </label>
             </span>
                     <input type="text" class="task-text form-control" title="Task" aria-label="Task" value="{{ task.getText() }}">
             <span class="input-group-addon">
-                <label>
-                    <input class="task-priority" type="checkbox" title = "Important" aria-label="Status" {% if task.getPriority() == true %} checked {% endif %}>Important!
+                <label class="task-checkbox">
+                    <input class="task-priority" type="checkbox" title = "Priority" aria-label="Priority" {% if task.getPriority() == true %} checked {% endif %}>
+                    <span class="indicator fa fa-exclamation" role='img' aria-label="Important"></span>
                 </label>
             </span>
                     <div class="task-date input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li><a class="today-btn" href="#">Today</a></li>
                             <li><a class="tomorrow-btn" href="#">Tomorrow</a></li>
@@ -67,7 +74,9 @@ Tasks
                         </ul>
                     </div>
                     <div class="input-group-btn">
-                        <button class="task-delete btn btn-default" type="button">X</button>
+                        <button class="task-delete btn " type="button">
+                            <span class='fa fa-times' role='img' aria-label='Delete'></span>
+                        </button>
                     </div>
                 </div>
             </div>

@@ -8,13 +8,17 @@ var bootstrapSass = {
     in: './node_modules/bootstrap-sass/'
 };
 
+var fontAwesome = {
+    in: './node_modules/font-awesome/'
+};
+
 var fonts = {
-    in: [source + 'fonts/*.*', bootstrapSass.in + 'assets/fonts/**/*'],
+    in: [source + 'fonts/*.*', bootstrapSass.in + 'assets/fonts/**/*', fontAwesome.in + 'fonts/*'],
     out: dest + 'fonts/'
 };
 
 var scss = {
-    in: source + 'scss/main.scss',
+    in: [source + 'scss/main.scss', fontAwesome.in + 'css/font-awesome.min.css'],
     out: dest + 'css/',
     watch: source + 'scss/**/*',
     sassOpts: {

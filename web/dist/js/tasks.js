@@ -1,6 +1,4 @@
-
 $(function(){
-
     var task = {
 
         init: function(){
@@ -66,17 +64,20 @@ $(function(){
 
             var newTask = "<div class='task-item' id='"+taskData.id+"'>"+
             "<div class='input-group'><span class='input-group-addon'>"+
-            "<input class='task-status' type='checkbox' title = 'Status' aria-label='Status' "+ (taskData.status === true ? 'checked': '') +"></span>"+
+            "<label  class='task-checkbox'>"+
+            "<input class='task-status' type='checkbox' title = 'Status' aria-label='Status' "+ (taskData.status === true ? 'checked': '') +">"+
+            "<span class='indicator fa fa-check' role='img' aria-label='Important'></span></label></span>"+
             "<input type='text' class='task-text form-control' title='Task' aria-label='Task' value='" + taskData.text + "'>"+
-            "<span class='input-group-addon'><label>"+
-            "<input class='task-priority' type='checkbox' title = 'Important' aria-label='Status' "+ (taskData.priority === true ? 'checked': '') +">Important!</label></span>"+
-            "<div class='task-date input-group-btn'><button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>"+
+            "<span class='input-group-addon'><label class='task-checkbox'>"+
+            "<input class='task-priority' type='checkbox' title = 'Priority' aria-label='Priority' "+ (taskData.priority === true ? 'checked': '') +">"+
+            "<span class='indicator fa fa-exclamation' role='img' aria-label='Important'></span></label></span>"+
+            "<div class='task-date input-group-btn'><button type='button' class='btn  dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>"+
             "<ul class='dropdown-menu dropdown-menu-right'>"+
             "<li><a class='today-btn' href='#'>Today</a></li>"+
             "<li><a class='tomorrow-btn' href='#'>Tomorrow</a></li>"+
             "<li role='separator' class='divider'></li>" +
             "<li><div class='calendar' data-date='" + taskData.date + "'></div><input type='' class='hidden calendar-date'></li></ul></div>"+
-            "<div class='input-group-btn'><button class='task-delete btn btn-default' type='button'>X</button></div></div></div>";
+            "<div class='input-group-btn'><button class='task-delete btn ' type='button'>X</button></div></div></div>";
 
             taskList.append(newTask);
             taskList.find('#'+taskData.id).find('.task-status, .task-text, .task-priority, .calendar').addClass('adding');

@@ -6273,3 +6273,63 @@ button.close {
   border-color: gainsboro;
   -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1); }
+
+.html {
+  height: 100%;
+  font-size: 16px; }
+
+body {
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #f6efe3;
+  background-image: url("https://www.transparenttextures.com/patterns/absurdity.png"); }
+
+.tasks {
+  margin-top: 40px; }
+  .tasks input[type=text] {
+    font-size: 1.5rem;
+    height: 40px;
+    border-radius: 0;
+    border: 1px solid #cacaca;
+    border-right: 0; }
+  .tasks button {
+    height: 40px;
+    font-size: 1.5rem;
+    border-radius: 0;
+    background-color: white;
+    border: 1px solid #cacaca; }
+  .tasks .input-group-addon {
+    padding: 0.5em;
+    background-color: white;
+    border-radius: 0;
+    border: 1px solid #cacaca;
+    border-right: 0; }
+    .tasks .input-group-addon .task-checkbox {
+      margin: 0;
+      height: 100%;
+      cursor: pointer; }
+      .tasks .input-group-addon .task-checkbox input {
+        position: absolute;
+        z-index: -1;
+        opacity: 0; }
+      .tasks .input-group-addon .task-checkbox .indicator {
+        width: 1em;
+        font-size: 1.5em;
+        color: gray; }
+        .tasks .input-group-addon .task-checkbox .indicator:before {
+          position: absolute;
+          top: 50%;
+          transform: translate(-50%, -50%); }
+      .tasks .input-group-addon .task-checkbox .task-priority:checked ~ .indicator {
+        color: red; }
+      .tasks .input-group-addon .task-checkbox .task-status:checked ~ .indicator {
+        color: green; }
+  .tasks .task-date {
+    min-width: 130px; }
+    .tasks .task-date button {
+      width: 100%; }
+  .tasks .task-item {
+    margin-top: 10px;
+    margin-bottom: 10px; }
+  .tasks .new-task {
+    margin-bottom: 40px; }
