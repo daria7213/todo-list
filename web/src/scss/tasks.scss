@@ -7,13 +7,6 @@
     border: 1px solid $border-color;
     border-right: 0;
   }
-  button{
-    height: $task-height;
-    font-size: 1.5rem;
-    border-radius: 0;
-    background-color: white;
-    border: 1px solid $border-color;
-  }
   .input-group-addon {
     padding: 0.5em;
     background-color: white;
@@ -41,10 +34,10 @@
         }
       }
       .task-priority:checked ~ .indicator{
-        color: red;
+        color: $alert-color;
       }
       .task-status:checked ~ .indicator {
-        color: green;
+        color: $success-color;
       }
     }
   }
@@ -53,6 +46,30 @@
     min-width: 130px;
     button {
       width: 100%;
+    }
+    .dropdown-menu{
+      border-radius: 0;
+      li{
+        a{
+          &:hover{
+            background: white;
+            color: $alert-color;
+          }
+        }
+      }
+    }
+    .calendar {
+      .day {
+        &:hover{
+          background: $border-color none;
+        }
+        &.active {
+          background: $alert-color none;
+          &:hover,&:focus {
+            background: darken($alert-color, 10%) none;
+          }
+        }
+      }
     }
   }
 

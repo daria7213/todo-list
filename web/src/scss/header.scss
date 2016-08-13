@@ -1,0 +1,17 @@
+#main-nav {
+  .nav {
+    li{
+      a{
+        color: $font-color;
+      }
+      &.active,&:hover {
+        a{
+          background: transparent;
+          color: $alert-color;
+          box-shadow: none;
+          -webkit-box-shadow: none;
+        }
+      }
+    }
+  }
+}

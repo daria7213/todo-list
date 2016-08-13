@@ -6280,9 +6280,33 @@ button.close {
 
 body {
   font-size: 16px;
+  color: #615b58;
   font-family: 'Open Sans', sans-serif;
   background-color: #f6efe3;
   background-image: url("https://www.transparenttextures.com/patterns/absurdity.png"); }
+
+button.btn {
+  height: 40px;
+  font-size: 1.5rem;
+  border-radius: 0;
+  background-color: white;
+  border: 1px solid #cacaca; }
+  button.btn:hover {
+    color: #d2603d; }
+
+.help-block {
+  color: #d2603d; }
+  .help-block .fa {
+    font-size: 1.25em; }
+
+#main-nav .nav li a {
+  color: #615b58; }
+
+#main-nav .nav li.active a, #main-nav .nav li:hover a {
+  background: transparent;
+  color: #d2603d;
+  box-shadow: none;
+  -webkit-box-shadow: none; }
 
 .tasks {
   margin-top: 40px; }
@@ -6292,12 +6316,6 @@ body {
     border-radius: 0;
     border: 1px solid #cacaca;
     border-right: 0; }
-  .tasks button {
-    height: 40px;
-    font-size: 1.5rem;
-    border-radius: 0;
-    background-color: white;
-    border: 1px solid #cacaca; }
   .tasks .input-group-addon {
     padding: 0.5em;
     background-color: white;
@@ -6321,13 +6339,24 @@ body {
           top: 50%;
           transform: translate(-50%, -50%); }
       .tasks .input-group-addon .task-checkbox .task-priority:checked ~ .indicator {
-        color: red; }
+        color: #d2603d; }
       .tasks .input-group-addon .task-checkbox .task-status:checked ~ .indicator {
-        color: green; }
+        color: #56c303; }
   .tasks .task-date {
     min-width: 130px; }
     .tasks .task-date button {
       width: 100%; }
+    .tasks .task-date .dropdown-menu {
+      border-radius: 0; }
+      .tasks .task-date .dropdown-menu li a:hover {
+        background: white;
+        color: #d2603d; }
+    .tasks .task-date .calendar .day:hover {
+      background: #cacaca none; }
+    .tasks .task-date .calendar .day.active {
+      background: #d2603d none; }
+      .tasks .task-date .calendar .day.active:hover, .tasks .task-date .calendar .day.active:focus {
+        background: #b34a29 none; }
   .tasks .task-item {
     margin-top: 10px;
     margin-bottom: 10px; }

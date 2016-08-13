@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Lal
- * Date: 09.07.2016
- * Time: 4:12
- */
 namespace App\Controller;
 
 use App\Entity\Task;
@@ -50,7 +44,6 @@ class TaskController
             'priority' => $task->getPriority(),
             'status' => $task->getStatus()
         );
-        //return '<pre>'.var_dump($task).'</pre><br><pre>'.var_dump($result).'</pre>';
         return $app->json(json_encode($taskData));
     }
 
@@ -60,7 +53,6 @@ class TaskController
         $app['repository.task']->delete($id);
 
         return new Response();
-
     }
 
     public function updateAction(Request $request, Application $app){

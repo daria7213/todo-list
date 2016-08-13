@@ -1,7 +1,9 @@
-
+$font-color: #615b58;
 $background-color: #f6efe3;
 $border-color: #cacaca;
 $task-height: 40px;
+$alert-color: #d2603d;
+$success-color: #56c303;
 
 .html {
   height: 100%;
@@ -10,7 +12,25 @@ $task-height: 40px;
 
 body {
   font-size: 16px;
+  color: $font-color;
   font-family: 'Open Sans', sans-serif;
   background-color: $background-color;
   background-image: url("https://www.transparenttextures.com/patterns/absurdity.png");
+}
+button.btn{
+  height: $task-height;
+  font-size: 1.5rem;
+  border-radius: 0;
+  background-color: white;
+  border: 1px solid $border-color;
+  &:hover {
+    color: $alert-color;
+  }
+}
+
+.help-block {
+  color: $alert-color;
+  .fa {
+    font-size: 1.25em;
+  }
 }
