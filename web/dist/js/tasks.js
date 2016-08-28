@@ -1,17 +1,22 @@
 $(function(){
-    var task = {
+    var Task = {
 
         init: function(){
-            taskDate.init();
-            $('.task-add').click(task.addTask);
-            $('.task-list').on('click', '.task-delete', function(){
-                task.deleteTask($(this).closest('.task-item'));
+            this.bindActions();
+        },
+        bindActions: function(){
+            var taskList = $('.task-list');
+
+            $('.task-add').click(this.addTask);
+
+            taskList.on('click', '.task-delete', function(){
+                Task.deleteTask($(this).closest('.task-item'));
             });
-            $('.task-list').on('change', '.task-status:not(.adding), .task-priority:not(.adding), .task-text:not(.adding)', function(){
-                task.updateTask($(this).closest('.task-item'));
+            taskList.on('change', '.task-status:not(.adding), .task-priority:not(.adding), .task-text:not(.adding)', function(){
+                Task.updateTask($(this).closest('.task-item'));
             });
-            $('.task-list').on('changeDate', '.calendar:not(.adding)', function(){
-                task.updateTask($(this).closest('.task-item'));
+            taskList.on('changeDate', '.calendar:not(.adding)', function(){
+                Task.updateTask($(this).closest('.task-item'));
             });
         },
         addTask: function(){
@@ -22,10 +27,10 @@ $(function(){
                 data: {
                     text: $('.new-task .task-text').val(),
                     priority: $('.new-task .task-priority').prop('checked'),
-                    date: taskDate.formatDate($('.new-task .calendar').datepicker('getDate'))
+                    date: TaskDate.formatDate($('.new-task .calendar').datepicker('getDate'))
                 },
                 success: function(taskData,status){
-                    task.appendTask($.parseJSON(taskData));
+                    Task.appendTask($.parseJSON(taskData));
                 }
             });
         },
@@ -52,7 +57,7 @@ $(function(){
                     status: task.find('.task-status').prop('checked'),
                     priority: task.find('.task-priority').prop('checked'),
                     text: task.find('.task-text').val(),
-                    date: taskDate.formatDate(task.find('.calendar').datepicker('getDate'))
+                    date: TaskDate.formatDate(task.find('.calendar').datepicker('getDate'))
                 },
                 success: function(text, status){
                     //alert('edited');
@@ -82,16 +87,16 @@ $(function(){
             taskList.append(newTask);
             taskList.find('#'+taskData.id).find('.task-status, .task-text, .task-priority, .calendar').addClass('adding');
             taskList.find('#'+taskData.id+' .calendar').datepicker({
-                format: taskDate.format
+                format: TaskDate.format
             }).each(function(){
-                taskDate.setDate($(this))
+                TaskDate.setDate($(this))
             });
             taskList.find('#'+taskData.id).find('.task-status, .task-text, .task-priority, .calendar').removeClass('adding');
             $('.tasks').append(taskList);
         }
     };
 
-    var taskDate = {
+    var TaskDate = {
         format: 'yyyy-mm-dd',
 
         setDate: function(calendar){
@@ -105,7 +110,7 @@ $(function(){
             }  else if (date == tomorrow){
                 date = "Tommorow";
             } else {
-                date = taskDate.formatDate(calendar.datepicker('getDate'));
+                date = TaskDate.formatDate(calendar.datepicker('getDate'));
             }
             calendar.next('.calendar-date').val(date);
             calendar.parents().prev('.btn').html(date + ' <span class="caret"></span>');
@@ -128,29 +133,37 @@ $(function(){
             calendar.datepicker('setDate', tomorrow);
         },
 
-        init: function(){
+        bindDateActions: function(){
+            var taskList = $('.task-list, .new-task');
+            taskList.on('changeDate', '.calendar', function(){
+                TaskDate.setDate($(this))
+            });
+            taskList.on('click', '.today-btn', function () {
+                TaskDate.setToday($(this).parent().parent().find('.calendar'));
+            });
+            taskList.on('click', '.tomorrow-btn', function () {
+                TaskDate.setTomorrow($(this).parent().parent().find('.calendar'));
+            });
+        },
+        setCalendars: function(){
             $('.calendar').datepicker({
-                format: taskDate.format
+                format: TaskDate.format
             });
 
             $('.new-task').find('.calendar').each(function(){
-                taskDate.setToday($(this));
+                TaskDate.setToday($(this));
             });
 
             $('.task-list').find('.calendar').each(function(){
-                taskDate.setDate($(this));
+                TaskDate.setDate($(this));
             });
-            $('.task-list, .new-task').on('changeDate', '.calendar', function(){
-                taskDate.setDate($(this))
-            });
-            $('.task-list, .new-task').on('click', '.today-btn', function () {
-                taskDate.setToday($(this).parent().parent().find('.calendar'));
-            });
-            $('.task-list, .new-task').on('click', '.tomorrow-btn', function () {
-                taskDate.setTomorrow($(this).parent().parent().find('.calendar'));
-            });
+        },
+        init: function(){
+            this.setCalendars();
+            this.bindDateActions();
         }
     };
 
-    task.init();
+    TaskDate.init();
+    Task.init();
 });
